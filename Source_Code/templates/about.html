@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain Tumor Classifier</title>
+    <style>
+        /* General styles */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #000000 0%, #8e44ad 50%, #3498db 100%);
+            color: #fff;
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation bar */
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 10px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            font-size: small;
+        }
+        .logo {
+            height: 50px;
+        }
+
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            background-color: #2575fc;
+            color: #fff;
+        }
+
+        /* Section styles */
+        section {
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        section:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        section h2 {
+            margin-bottom: 15px;
+            font-size: 2rem;
+        }
+
+        section p {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        li {
+            text-align: left;
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        /* Container for Predictions */
+        .container {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+            padding: 20px 40px;
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+            margin: 40px auto;
+        }
+
+        .file-input {
+            margin-bottom: 20px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        label {
+            cursor: pointer;
+            background-color: #fff;
+            color: #2575fc;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        label:hover {
+            background-color: #2575fc;
+            color: #fff;
+        }
+
+        .submit-btn {
+            background-color: #6a11cb;
+            border: none;
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            background-color: #2575fc;
+        }
+
+        /* Image preview styles */
+        #image-preview {
+            margin-top: 20px;
+            display: none;
+        }
+
+        #image-preview img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        /* Display the classification result */
+        .result {
+            margin-top: 30px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 10px;
+            }
+
+            .navbar a {
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+   
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <img src="https://p.kindpng.com/picc/s/335-3354259_narasaraopeta-engineering-college-lagoa-do-fogo-hd-png.png" alt="Brain Tumor Detection Logo" class="logo">
+        
+        <br>
+        
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#project">Project</a>
+        <a href="#metrics">Model Evaluation Metrics</a>
+        <a href="#flowchart">Project Flowchart</a>
+        <a href="{{ url_for('home') }}">Logout</a>
+       
+    </nav>
+
+    <!-- Sections -->
+    <section id="home">
+        <h2>Welcome to the Brain Tumor Classifier Tool</h2>
+        <h2>Enhanced Classification and Detection of Brain
+            Tumor using Hybrid Deep Learning and Machine
+            Learning Models</h2>
+        <p  style="font-size: 25px; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">This application utilizes advanced machine learning models to classify brain tumors accurately from MRI images.</p>
+        <p>
+            This tool is designed to assist in the early detection and classification of brain tumors using advanced machine learning techniques. By leveraging a hybrid model that combines Convolutional Neural Networks (CNNs) and Support Vector Machines (SVMs), we aim to deliver high-accuracy predictions based on MRI scans of the brain.
+            
+            MRI scans provide crucial insights into the structural changes of the brain, and our system processes these images to identify the presence and type of tumors. The hybrid CNN-SVM approach combines the strengths of CNNs in feature extraction from MRI images with the powerful classification capabilities of SVMs. This results in a robust and accurate model capable of classifying different types of brain tumors, such as glioma, meningioma, and pituitary tumors.
+            
+            Our goal is to provide a reliable tool that aids medical professionals in their diagnostic process, enhancing their ability to make timely and informed decisions for better patient outcomes.</p>
+            <img src="https://www.mdpi.com/sensors/sensors-21-02222/article_deploy/html/images/sensors-21-02222-g005.png" height="500px" width="800px" alt="Italian Trulli">
+            <p>Among the most terrible types of cancer, brain tumors necessitate immediate de- tection for successful treatment. MRI is crucial in spotting brain tumors because of its best quality and precision. However, manual interpretation by radiologists can be time-consuming and inconsistent, necessitating automated systems to detect and classify malignant brain tumors with high accuracy. This improves
+ 
+
+
+                diagnosis and treatment outcomes. In India, the incidence of brain tumors is on the rise, with around 40,000 new cases projected annually. Early and pre- cise detection is essential to improve survival rates, as delays or errors can lead to misdiagnosis and further suffering. Accurate classification of tumors, such as glioma,meningioma, and pituitary tumors </p>
+    </section>
+    <section id="about">
+        <h2>About</h2>
+        <p style="font-size: 25px; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">Our tool leverages a hybrid CNN-SVM model trained on MRI images to deliver precise brain tumor classifications, assisting medical professionals in their diagnosis.</p>
+      <p>The Brain Tumor Detection and Classification Tool is an advanced application designed to assist in the detection and diagnosis of brain tumors using MRI scans. This tool leverages state-of-the-art machine learning techniques to accurately identify and classify different types of brain tumors, including glioma, meningioma, pituitary tumors, and non-tumor images. By processing MRI images, the tool provides valuable insights that aid medical professionals in making more accurate and timely diagnoses.</p>
+      <p>At the core of this tool is a hybrid machine learning model that combines the power of Convolutional Neural Networks (CNNs) and Support Vector Machines (SVMs). The CNN is responsible for feature extraction, automatically learning and identifying relevant patterns from the raw MRI images. These patterns include critical details such as texture, shape, and intensity variations, which are essential for distinguishing between different types of tumors. The extracted features are then passed to the SVM classifier, which applies a decision boundary to classify the images into appropriate categories based on the learned features. The synergy between CNNs for feature extraction and SVMs for classification ensures that the model achieves high accuracy and reliability in tumor detection.</p>
+      <p>The dataset used to train the model includes a diverse collection of MRI brain scans, representing a variety of brain tumor types and healthy brain tissue. To ensure that the model works with the best possible data, advanced preprocessing techniques are employed, such as Adaptive Gamma Correction (AGC) and noise reduction methods like median filtering. These techniques enhance the quality of the MRI images, improving the model's ability to detect tumors with precision.</p>
+      <p>Early detection of brain tumors is critical to improving patient outcomes, as timely diagnosis can significantly impact treatment and recovery. This tool aims to support medical professionals, such as radiologists, in their diagnostic process, enabling them to make faster and more accurate decisions. By automating the classification of MRI images, the tool not only saves valuable time but also enhances the accuracy of diagnoses, which can ultimately lead to better patient care and treatment planning.</p>
+     <p>With the integration of cutting-edge artificial intelligence techniques and medical imaging, this Brain Tumor Detection and Classification Tool represents a significant step forward in the field of medical diagnostics. It provides a promising solution for improving diagnostic workflows and outcomes for patients with brain tumors.</p> 
+    </section>
+    <section id="project">
+        <h2>Project</h2>
+        <p  style="font-size: 25px; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">Explore the details of our project, including the dataset, preprocessing techniques, and the architecture of our hybrid model.</p>
+        <p>Our project focuses on using machine learning techniques for the detection and classification of brain tumors from MRI scans. The goal is to automate the process of tumor classification to aid medical professionals in making faster, more accurate diagnoses. Below are the key components of the project, including the dataset, preprocessing techniques, and the architecture of our hybrid CNN-SVM model.</p>
+   <h2>dataset</h2>
+   <p>The dataset used for training our model consists of a collection of MRI brain scans. These images are critical for identifying various types of brain tumors, and they come from different sources to ensure diversity and generalizability in the model. The dataset includes multiple tumor classes, such as:</p>
+   <ul>
+    <li>Glioma: A common and aggressive form of brain cancer.</li>
+    <li>Meningioma: A typically benign tumor that arises from the meninges, the layers of tissue covering the brain and spinal cord.</li>
+<li>Pituitary Tumor: Tumors that develop in the pituitary gland, affecting hormone regulation and other bodily functions.</li>
+    <li>Non-Tumor Images: Healthy brain tissue used as a reference for comparison.</li>
+</ul>
+<h2>Preprocessing Techniques</h2>
+<p>Before feeding the MRI images into the machine learning model, several preprocessing steps are applied to enhance image quality and ensure optimal model performance. Adaptive Gamma Correction (AGC) is used to adjust the contrast of the MRI images, enhancing the visibility of important features, particularly in tumor areas that may have low contrast compared to the surrounding tissue. To reduce noise and smooth the images, median filtering is applied, helping to remove unwanted artifacts that could interfere with the feature extraction process. This ensures that the model can focus on the relevant patterns within the MRI images. Additionally, normalization of pixel intensity values is performed to ensure a consistent range across all images, which is essential for effective model training. This step helps prevent issues that may arise from varying image intensities within the dataset. Lastly, the MRI images are resized to a consistent dimension, making them suitable for processing by the neural network while also reducing computational complexity, thus improving the model's efficiency. Together, these preprocessing techniques ensure that the input images are clean, well-enhanced, and standardized, enabling the model to learn more effectively from the data.</p>
+<h2>Model Architecture</h2>
+<p>The hybrid model used in this project combines two powerful machine learning techniques: Convolutional Neural Networks (CNNs) and Support Vector Machines (SVMs). This hybrid approach allows the system to leverage both the feature extraction capabilities of CNNs and the classification power of SVMs, creating a robust solution for brain tumor classification.
+
+    The Convolutional Neural Network (CNN) acts as the feature extractor in our hybrid model. It consists of several convolutional layers that apply filters to the MRI images, detecting key features such as edges, textures, and patterns associated with different tumor types. As the data progresses through the layers, the CNN learns hierarchical features, from simple edges to more complex structures in the brain images. This enables the model to capture subtle details that are crucial for distinguishing between different types of tumors, enhancing its ability to recognize and classify brain tumors accurately.
+    
+    Once the CNN extracts relevant features from the MRI images, these features are passed to the Support Vector Machine (SVM) for classification. The SVM is a supervised machine learning algorithm that excels in classification tasks by finding the optimal hyperplane that separates data points from different classes, such as glioma, meningioma, pituitary, or non-tumor. Using the features extracted by the CNN, the SVM efficiently classifies the MRI images into one of the tumor categories, ensuring precise tumor identification.
+    
+    This hybrid CNN-SVM architecture leverages the strengths of both methods. The CNN is adept at automatically learning complex patterns from raw image data, while the SVM excels at classification based on these learned features. Together, this combination results in a highly accurate and efficient model for classifying brain tumors from MRI scans.</p>
+    <img src="{{ url_for('static', filename='images/Picture1.png') }}" alt="Model Evaluation Metrics" style="max-width: 100%;  margin-top: 20px; border-radius: 10px;">
+</section>
+
+   
+    <section id="metrics">
+        <h2>Model Evaluation Metrics</h2>
+
+        <p  style="font-size: 25px; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">Our model has been evaluated on metrics such as accuracy, sensitivity, specificity, and the Jaccard coefficient, ensuring robust performance across datasets.</p>
+      <img src="{{ url_for('static', filename='images/image8.png') }}" alt="Model Evaluation Metrics" style="max-width: 100%; height:300px; margin-top: 20px; border-radius: 10px;">
+      <h2>Accuracy</h2>
+      <img src="{{ url_for('static', filename='images/sens (1).png') }}" alt="Model Evaluation Metrics" style="max-width: 100%; height:300px; margin-top: 20px; border-radius: 10px;">
+      <h2>specificity</h2>
+      <img src="{{ url_for('static', filename='images/sensitivity (1) (1).png') }}" alt="Model Evaluation Metrics" style="max-width: 100%; height:300px; margin-top: 20px; border-radius: 10px;">
+      <h2>sensitivity</h2>
+      <img src="{{ url_for('static', filename='images/image11 (1).png') }}" alt="Model Evaluation Metrics" style="max-width: 100%; height:300px; margin-top: 20px; border-radius: 10px;">
+        <h2>Jaccard Coefficient</h2>  
+      <img src="{{ url_for('static', filename='images/image7 (1).png') }}" alt="Model Architecture" style="max-width: 100%; height: auto; margin-top: 20px; border-radius: 10px;">
+<p>These graphs illustrate the training progress of a hybrid model, CNN-SVM model, over multiple epochs. The left graph depicts accuracy, showing the percentage of correctly classified samples over time, with separate lines for training and validation data. Both training and validation accuracy increase rapidly initially, indicating effective learning, though the training accuracy continues to climb ,while the validation accuracy plateaus around 90%, creating a noticeable gap. </p>
+    </section>
+
+    <section id="flowchart">
+        <h2>Project Flowchart</h2>
+        <p  style="font-size: 25px; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">Below is a comprehensive flowchart showcasing the structure and workflow of our brain tumor classification project.</p>
+        <p>The workflow begins with preprocessing MRI images to enhance their quality. Techniques like Adaptive Gamma Correction and Adaptive Contrast Enhancement optimize the brightness and contrast of the images, while Median Filtering removes noise. These steps ensure that the images are clean and suitable for further processing.</p>
+        <img src="{{ url_for('static', filename='images/flowchart.png') }}" alt="Project Flowchart" style="max-width: 500px; height: auto; margin-top: 20px; border-radius: 10px;">
+
+           <p> After preprocessing, segmentation is conducted using Fuzzy C-Means (FCM) clustering. This technique identifies and isolates the tumor region with high precision by considering the natural fuzziness in data, which makes it more effective than traditional hard classification methods. Following segmentation, features such as texture and spatial relationships are extracted using the Grey Level Co-occurrence Matrix (GLCM), which provides crucial information for differentiating tumor types.The extracted features are then passed through a CNN to capture deep and intricate patterns from the segmented images. 
+            
+            The CNN acts as an advanced feature extractor, transforming the data into a format suitable for classification. These features are subsequently fed into an SVM classifier, which categorizes the data into classes such as healthy tissue, benign tumor, or malignant tumor. The SVM’s ability to establish clear decision boundaries enhances the overall classification accuracy of the model.
+            </p>
+            
+    </section>
+    <footer style="background-color: black; padding: 20px; text-align: center; margin-top: 20px;">
+        <h3>Contact Information</h3>
+        <p><strong>Bala Sri Abhigna Diveela</strong> - <a href="mailto:abhidiveela@gmail.com">abhidiveela@gmail.com</a></p>
+        <p><strong>Sameera Shaik</strong> - <a href="mailto:sameerashaik22498@gmail.com">sameerashaik22498@gmail.com</a></p>
+        <p><strong>Harini Chinnam</strong> - <a href="mailto:chinnamharini30@gmail.com">chinnamharini30@gmail.com</a></p>
+    </footer>
+
+    <script>
+        // Function to preview the uploaded image
+        function previewImage() {
+            const file = document.getElementById('file').files[0];
+            const reader = new FileReader();
+            reader.onloadend = function () {
+                const previewImg = document.getElementById('preview-img');
+                const previewContainer = document.getElementById('image-preview');
+                previewImg.src = reader.result;
+                previewContainer.style.display = 'block';
+            }
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Simulated function to classify the image (for now it just displays a result after submission)
+        function classifyImage() {
+    const fileInput = document.getElementById('file');
+    const resultContainer = document.getElementById('classification-result');
+
+    if (!fileInput.files[0]) {
+        alert('Please upload an image before classifying.');
+        return;
+    }
+
+    // Simulate classification with a random result
+    setTimeout(() => {
+        const possibleResults = [
+            'Glioma Tumor Detected',
+            'No Tumor Detected',
+            'Pituitary Tumor Detected',
+            'Meningioma Tumor Detected'
+        ];
+        const randomResult = possibleResults[Math.floor(Math.random() * possibleResults.length)];
+        resultContainer.textContent = randomResult;
+        resultContainer.style.display = 'block';
+    }, 1000); // Simulate processing delay
+}
+
+    </script>
+</body>
+</html>
